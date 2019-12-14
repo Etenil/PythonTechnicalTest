@@ -1,7 +1,10 @@
 from datetime import date
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 from django.conf import settings
+from cymbology import Isin
+from cymbology.exceptions import IdError
 
 
 CURRENCIES = [
@@ -9,6 +12,16 @@ CURRENCIES = [
     ('EUR', 'Euro'),
     ('USD', 'US Dollar')
 ]
+
+
+isin = Isin()
+
+
+def validate_isin(value):
+    try:
+        isin.validate(value)
+    except IdError:
+        raise ValidationError
 
 
 class LegalEntity(models.Model):
@@ -27,7 +40,7 @@ class LegalEntity(models.Model):
 class Bond(models.Model):
     # ISIN identifies a company, it's a 12 characters long string with a
     # specific validation (format + the last character is a checksum)
-    isin = models.CharField(max_length=12)
+    isin = models.CharField(max_length=12, validators=[validate_isin])
     size = models.IntegerField(null=False, validators=[MinValueValidator(1)])
     currency = models.CharField(max_length=3, choices=CURRENCIES)
     # Registering a bond that matured in the past doesn't seem sensible

@@ -164,6 +164,21 @@ class BondsTestCase(APITestCase):
             status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
+    def test_user_cant_save_bond_with_invalid_isin(self):
+        self.client.force_authenticate(self.bob)
+        data = {
+            'isin': 'foobar',
+            'size': 1000,
+            'currency': 'EUR',
+            'maturity': '2030-01-01',
+            'lei': None
+        }
+        resp = self.client.post("/bonds/", data, format='json')
+        self.assertEqual(
+            resp.status_code,
+            status.HTTP_400_BAD_REQUEST
+        )
+
     def test_user_cant_override_the_author_field(self):
         self.client.force_authenticate(self.bob)
         data = {
