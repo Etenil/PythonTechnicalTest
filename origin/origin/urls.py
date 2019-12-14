@@ -20,6 +20,7 @@ from bonds import views
 
 router = routers.DefaultRouter()
 router.register(r'bonds', views.BondViewSet)
+router.register(r'lei', views.LegalEntityViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -2,8 +2,8 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
 
-from .models import Bond
-from .serializers import BondSerializer
+from .models import Bond, LegalEntity
+from .serializers import BondSerializer, LegalEntitySerializer
 
 
 class BondViewSet(viewsets.ModelViewSet):
@@ -15,8 +15,15 @@ class BondViewSet(viewsets.ModelViewSet):
         return Bond.objects.filter(author=user)
 
     def create(self, request):
-        req_data = dict(request.data)
-        req_data['author'] = request.user.id
+        try:
+            req_data = request.data.dict()
+        except AttributeError:
+            # This only happens in unit tests, the force_authentication
+            # method creates a dict() instead of a QueryDict. It's probably
+            # a bug.
+            req_data = request.data
+
+        req_data['author'] = request.user
 
         serializer = self.get_serializer(data=req_data)
         serializer.is_valid(raise_exception=True)
@@ -27,3 +34,8 @@ class BondViewSet(viewsets.ModelViewSet):
             status=status.HTTP_201_CREATED,
             headers=headers
         )
+
+
+class LegalEntityViewSet(viewsets.ModelViewSet):
+    queryset = LegalEntity.objects.all()
+    serializer_class = LegalEntitySerializer
