@@ -31,9 +31,10 @@ class BondSerializer(serializers.HyperlinkedModelSerializer):
     def is_valid(self, raise_exception=False):
         validity = super().is_valid(raise_exception)
 
-        # Reinjecting author here. The validation somehow strips it despite
-        # being one of the declared fields.
+        # Reinjecting author and legal_name here. The validation somehow
+        # strips them despite being some of the declared fields.
         self._validated_data['author'] = self.initial_data['author']
+        self._validated_data['legal_name'] = self.initial_data['legal_name']
         return validity
 
 

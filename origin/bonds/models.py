@@ -17,7 +17,7 @@ class LegalEntity(models.Model):
     a form of cache for the remote API that feeds us LEI data, we can save
     time and reduce requests this way.
     """
-    lei = models.CharField(max_length=20)
+    lei = models.CharField(max_length=20, primary_key=True)
     name = models.CharField(max_length=256)
 
     def __str__(self):

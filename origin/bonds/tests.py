@@ -28,7 +28,7 @@ class BondsTestCase(APITestCase):
             'size': 1000,
             'currency': 'EUR',
             'maturity': '2030-01-01',
-            'lei': 'ABC12345'
+            'lei': 'R0MUWSFPU8MPRO8K5P83'
         }
         resp = self.client.post("/bonds/", data, format='json')
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
@@ -52,7 +52,7 @@ class BondsTestCase(APITestCase):
             'size': 1000,
             'currency': 'EUR',
             'maturity': '2030-01-01',
-            'lei': 'ABC12345'
+            'lei': 'R0MUWSFPU8MPRO8K5P83'
         }
         post_resp = self.client.post("/bonds/", data, format='json')
         self.assertEqual(post_resp.status_code, status.HTTP_201_CREATED)
@@ -75,7 +75,7 @@ class BondsTestCase(APITestCase):
             'size': 1000,
             'currency': 'EUR',
             'maturity': '2030-01-01',
-            'lei': 'ABC12345'
+            'lei': 'R0MUWSFPU8MPRO8K5P83'
         }
         post_resp = self.client.post("/bonds/", data, format='json')
         self.assertEqual(post_resp.status_code, status.HTTP_201_CREATED)
@@ -101,7 +101,7 @@ class BondsTestCase(APITestCase):
             'size': 1000,
             'currency': 'EUR',
             'maturity': '2030-01-01',
-            'lei': 'ABC12345'
+            'lei': 'R0MUWSFPU8MPRO8K5P83'
         }
         resp = self.client.post("/bonds/", data, format='json')
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
