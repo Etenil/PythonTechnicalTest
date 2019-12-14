@@ -10,6 +10,10 @@ class InvalidLeiError(Exception):
     pass
 
 
+class LeiRequestError(Exception):
+    pass
+
+
 def get_entity_name(lei):
     if lei is None or lei == '':
         raise InvalidLeiError()
@@ -18,6 +22,6 @@ def get_entity_name(lei):
     )
 
     if resp.status_code != 200:
-        raise InvalidLeiError()
+        raise LeiRequestError()
 
     return resp.json()[0]['Entity']['LegalName']['$']

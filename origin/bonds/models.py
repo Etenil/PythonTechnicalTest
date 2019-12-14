@@ -28,7 +28,7 @@ class Bond(models.Model):
     # ISIN identifies a company, it's a 12 characters long string with a
     # specific validation (format + the last character is a checksum)
     isin = models.CharField(max_length=12)
-    size = models.IntegerField(null=False, validators=[MinValueValidator(0)])
+    size = models.IntegerField(null=False, validators=[MinValueValidator(1)])
     currency = models.CharField(max_length=3, choices=CURRENCIES)
     # Registering a bond that matured in the past doesn't seem sensible
     maturity = models.DateField(null=False,

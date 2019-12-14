@@ -5,12 +5,13 @@ from rest_framework.response import Response
 from .models import Bond, LegalEntity
 from .serializers import BondSerializer, LegalEntitySerializer
 
-from .gleif import get_entity_name, InvalidLeiError
+from .gleif import get_entity_name, InvalidLeiError, LeiRequestError
 
 
 class BondViewSet(viewsets.ModelViewSet):
     queryset = Bond.objects.all()
     serializer_class = BondSerializer
+    http_method_names = ['get', 'post', 'options', 'head']
 
     def get_queryset(self):
         user = self.request.user
@@ -53,6 +54,11 @@ class BondViewSet(viewsets.ModelViewSet):
                 return Response(
                     {'error': 'Invalid LEI number provided'},
                     status=status.HTTP_400_BAD_REQUEST
+                )
+            except LeiRequestError:
+                return Response(
+                    {'error': 'Error getting LEI number information'},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
 
         req_data['legal_name'] = legal_name
