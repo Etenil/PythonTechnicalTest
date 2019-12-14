@@ -1,6 +1,7 @@
 from datetime import date
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.contrib.auth.models import User
 
 
 CURRENCIES = [
@@ -21,3 +22,4 @@ class Bond(models.Model):
                                 validators=[MinValueValidator(date.today())])
     # LEIs are 20 characters long, see ISO 17442:2012
     lei = models.CharField(max_length=20)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
