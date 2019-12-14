@@ -44,6 +44,8 @@ class BondsTestCase(APITestCase):
             date.fromisoformat(data['maturity'])
         )
         self.assertEqual(my_bond.lei, data['lei'])
+        self.assertEqual(my_bond.author, self.bob)
+        self.assertEqual(my_bond.legal_name.name, 'BNP PARIBAS')
 
     def test_get_a_bond_works(self):
         self.client.force_authenticate(self.bob)
@@ -66,6 +68,8 @@ class BondsTestCase(APITestCase):
         self.assertEqual(my_bond['currency'], data['currency'])
         self.assertEqual(my_bond['maturity'], data['maturity'])
         self.assertEqual(my_bond['lei'], data['lei'])
+        self.assertEqual(my_bond['author'], 'bob')
+        self.assertEqual(my_bond['legal_name'], 'BNP PARIBAS')
 
     def test_get_multiple_bonds_works(self):
         self.client.force_authenticate(self.bob)
@@ -93,6 +97,8 @@ class BondsTestCase(APITestCase):
         self.assertEqual(my_bond['currency'], data['currency'])
         self.assertEqual(my_bond['maturity'], data['maturity'])
         self.assertEqual(my_bond['lei'], data['lei'])
+        self.assertEqual(my_bond['author'], 'bob')
+        self.assertEqual(my_bond['legal_name'], 'BNP PARIBAS')
 
     def test_user_cant_get_other_user_bond(self):
         self.client.force_authenticate(self.bob)
