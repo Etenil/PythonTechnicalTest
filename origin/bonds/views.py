@@ -1,7 +1,9 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework import viewsets
+
+from .models import Bond
+from .serializers import BondSerializer
 
 
-class HelloWorld(APIView):
-    def get(self, request):
-        return Response("Hello World!")
+class BondViewSet(viewsets.ModelViewSet):
+    queryset = Bond.objects.all()
+    serializer_class = BondSerializer
